@@ -152,15 +152,27 @@ function placeFood(){
 function resetSnake(){ snake = [{x:8,y:8}]; dir={x:0,y:0}; placeFood(); drawSnake(); }
 
 function step(){
+  // if not moving, do nothing
+  if (dir.x === 0 && dir.y === 0) return;
+
   const head = {x: snake[0].x + dir.x, y: snake[0].y + dir.y};
   // wrap around
   head.x = (head.x + cols) % cols; head.y = (head.y + rows) % rows;
-  // hit self?
-  if (snake.some(s=>s.x===head.x && s.y===head.y)) { running=false; clearInterval(timer); alert('Game over!'); return; }
+
+  // determine whether we'll eat this step (tail stays) so collision logic matches
+  const willEat = (food && head.x === food.x && head.y === food.y);
+  const hitSelf = snake.some((s, idx) => {
+    // if we're not eating, the last segment will move away this turn, so it's safe to move into it
+    if (!willEat && idx === snake.length - 1) return false;
+    return s.x === head.x && s.y === head.y;
+  });
+
+  if (hitSelf) { running = false; clearInterval(timer); setTimeout(()=>alert('Game over!'), 20); return; }
+
   snake.unshift(head);
-  if (food && head.x===food.x && head.y===food.y) { placeFood(); } else { snake.pop(); }
+  if (willEat) { placeFood(); } else { snake.pop(); }
   drawSnake();
-}
+} 
 
 function drawSnake(){
   sCtx.clearRect(0,0,sCanvas.width,sCanvas.height);
@@ -176,7 +188,10 @@ function drawSnake(){
 }
 
 startBtn.addEventListener('click', ()=>{
-  if (running) return; running = true; clearInterval(timer);
+  if (running) return;
+  // ensure we have a direction so the game starts moving
+  if (dir.x === 0 && dir.y === 0) dir = {x:1,y:0};
+  running = true; clearInterval(timer);
   timer = setInterval(step, 200 - speedRange.value*12);
 });
 pauseBtn.addEventListener('click', ()=>{ running=false; clearInterval(timer); });
@@ -230,3 +245,5 @@ function scaleCanvas(c){ const r = window.devicePixelRatio||1; const w = c.width
 scaleCanvas(sCanvas);
 
 // end of file
+
+
