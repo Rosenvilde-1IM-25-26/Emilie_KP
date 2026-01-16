@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Amazing website trust</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-theme="pink">
+  <header class="topbar">
+    <h1>/ᐠ > ˕ <マ ₊˚⊹♡</h1>
+    <div class="controls">
+      <label>Theme:
+        <select id="theme-select">
+          <option value="pink">Pastel Pink</option>
+          <option value="blue">Pastel Blue</option>
+          <option value="lilac">Pastel Lilac</option>
+          <option value="mint">Pastel Mint</option>
+          <option value="peach">Pastel Peach</option>
+          <option value="sunset">Pastel Sunset</option>
+          <option value="calm">Calm Green</option>
+          <option value="dark">Dark Mode</option>
+          <option value="dark-red">Dark Red</option>
+        </select>
+      </label>
+      <label>Cursor:
+        <select id="cursor-select">
+          <option value="none">None</option>
+          <option value="sparkle">Sparkles</option>
+          <option value="halo">Halo</option>
+          <option value="trail">Trail</option>
+          <option value="comet">Comet</option>
+          <option value="confetti">Confetti</option>
+        </select>
+      </label>
+      <label>Cursor Color:
+        <input type="color" id="cursor-color" value="#ffb6c1" title="Cursor effect color">
+      </label>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card draw-card">
+      <h2>Draw</h2>
+      <div class="toolbar">
+        <input type="color" id="draw-color" value="#ffb6c1">
+        <input type="range" id="draw-size" min="1" max="40" value="6">
+        <button id="clear-draw">Clear</button>
+        <button id="save-draw">Save</button>
+      </div>
+      <canvas id="draw-canvas"></canvas>
+    </section>
+
+    <section class="card snake-card">
+      <h2>Snake</h2>
+      <div class="snake-controls">
+        <button id="start-snake">Start</button>
+        <button id="pause-snake">Pause</button>
+        <button id="reset-snake">Reset</button>
+        <label>Speed:
+          <input type="range" id="snake-speed" min="2" max="12" value="6">
+        </label>
+      </div>
+      <canvas id="snake-canvas" width="320" height="320"></canvas>
+      <p class="hint">Use arrow keys or WASD to control.</p>
+    </section>
+    <section class="card emoji-card">
+      <h2>Emoji Combiner</h2>
+      <div class="emoji-controls">
+        <label>Count:
+          <input type="number" id="emoji-count" min="1" max="5" value="3" style="width:56px;padding:4px;border-radius:6px;border:1px solid rgba(0,0,0,0.06);margin-left:6px">
+        </label>
+        <button id="emoji-gen">Generate</button>
+        <button id="emoji-copy">Copy</button>
+      </div>
+      <div id="emoji-display" class="emoji-display" aria-live="polite">✨ Try it!</div>
+    </section>
+    <section class="card chess-card">
+      <h2>Chess</h2>
+      <div class="chess-controls">
+        <button id="chess-reset">Reset</button>
+        <button id="chess-undo">Undo</button>
+        <label style="margin-left:8px"><input type="checkbox" id="chess-vs-ai"> Play vs Computer (Black)</label>
+        <span id="chess-turn" style="margin-left:auto">Turn: White</span>
+      </div>
+      <div id="chess-history" class="chess-history" aria-live="polite" style="margin-top:8px;font-size:13px;color:var(--muted)"></div>
+      <div id="chess-board" class="chess-board" role="grid" aria-label="Chess board"></div>
+      <div id="chess-status" class="chess-status" aria-live="polite"></div>
+      <div id="chess-promo" class="chess-promo" aria-hidden="true" hidden></div>
+    </section>
+    <section class="card info-card">
+      <h2>Tips</h2>
+      <ul>
+        <li>Switch themes & cursor style from the top-right.</li>
+      </ul>
+    </section>
+
+    <section class="card pet-card">
+      <h2>Virtual Pet — Cat</h2>
+      <div class="pet-area">
+        <div id="cat" class="cat">🐱</div>
+        <div class="pet-info">
+          <div class="pet-status-row">
+            <div class="pet-status" id="pet-status">Status: Healthy</div>
+            <div class="pet-survived">Survived: <span id="survived-time">0s</span></div>
+          </div>
+          <div class="pet-stats">
+            <div class="stat"><label>Hunger</label><div class="bar"><div id="stat-hunger" class="bar-fill"></div></div></div>
+            <div class="stat"><label>Thirst</label><div class="bar"><div id="stat-thirst" class="bar-fill"></div></div></div>
+            <div class="stat"><label>Affection</label><div class="bar"><div id="stat-affection" class="bar-fill"></div></div></div>
+            <div class="stat"><label>Boredom</label><div class="bar"><div id="stat-boredom" class="bar-fill"></div></div></div>
+            <div class="stat"><label>Tiredness</label><div class="bar"><div id="stat-tiredness" class="bar-fill"></div></div></div>
+          </div>
+          <div class="pet-controls">
+            <button id="feed-btn">Feed</button>
+            <button id="water-btn">Give water</button>
+            <button id="play-btn">Play</button>
+            <button id="sleep-btn">Sleep</button>
+            <button id="reset-btn">Reset</button>
+          </div>
+        </div>
+      </div>
+      <p class="hint">Use the buttons to feed, water, play, or put the cat to sleep. Keep stats in the green or it may die.</p>
+    </section>
+  </main>
+
+  <div id="cursor-layer" aria-hidden="true"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
